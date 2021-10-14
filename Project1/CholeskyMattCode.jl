@@ -4,10 +4,15 @@ using LinearAlgebra
 A=[2 1; 1 2]
 display(A)
 n=size(A)[1]
+#creation of L matrix 
 L=zeros(n,n)
+
 #k represents rows, i represents columns. j is our iterative variable
+#outer row loop
 for k=1:n
+    #inner column loop
     for i=1:n
+        #if below diag
         if k>i
             s=0
             #creation of element L[k,i]
@@ -15,6 +20,7 @@ for k=1:n
                 s+=L[i,j]*L[k,j]
             end
             L[k,i]=(A[k,i]-s)/L[i,i]
+        #if on diagonal
         elseif k==i
             s=0
             #creation of element L[k,k]
@@ -27,3 +33,4 @@ for k=1:n
 end
 
 display(L)
+display(L*L')
