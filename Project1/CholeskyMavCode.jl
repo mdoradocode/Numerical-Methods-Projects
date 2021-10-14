@@ -10,7 +10,7 @@ for j=1:cols-1
             
         if i == j
             then
-            k == i
+            k = i
             C=sqrt(a(j,j)- sum[L(i,k) * L(j,k) | k == [0:j-1]])
             L[i,j]=C
     end

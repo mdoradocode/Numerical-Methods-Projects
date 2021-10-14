@@ -68,6 +68,7 @@ open("prog1c.txt", "r") do fp
         if A == 99
             break
         end
+        #Below this comment and within the while loop is where code from Maverick and Matt should go
     end
 end
 
