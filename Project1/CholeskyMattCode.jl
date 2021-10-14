@@ -10,12 +10,14 @@ for k=1:n
     for i=1:n
         if k>i
             s=0
+            #creation of element L[k,i]
             for j=1:i-1
                 s+=L[i,j]*L[k,j]
             end
             L[k,i]=(A[k,i]-s)/L[i,i]
         elseif k==i
             s=0
+            #creation of element L[k,k]
             for j=1:k-1
                 s+=L[k,j]*L[k,j]
             end
