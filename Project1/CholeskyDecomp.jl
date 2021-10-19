@@ -1,4 +1,5 @@
 using DelimitedFiles
+using LinearAlgebra
 
 #This function returns one matrix from the prog1b.txt file
 function readFileB(fp)
@@ -16,8 +17,6 @@ function readFileB(fp)
         A[i,:] = s
     end
     a=readline(fp)
-    #Uncomment this line if you want to display the matrix being read on this iteration
-    #display(A)
     return A
 end
 
@@ -26,7 +25,6 @@ function readFileC(fp)
     global d
     a = readline(fp)
     if a === ""
-        display("Here")
         return 99
     end
     d = parse(Int,a)
@@ -39,9 +37,54 @@ function readFileC(fp)
         A[i,:] = s
     end
     a=readline(fp)
-    #Uncomment this line if you want to display the matrix being read on this iteration
-    #display(A)
     return A
+end
+
+function nonDiagCase(A)
+#k represents rows, i represents columns. j is our iterative variable
+#outer row loop
+if A[0,1] == [1,0]
+    L=zeros(d,d)
+    for k=1:d
+        #inner column loop
+        for i=1:d
+            #if below diag
+            if k>i
+                s=0
+                #creation of element L[k,i]
+                for j=1:i-1
+                    s+=L[i,j]*L[k,j]
+                end
+                L[k,i]=(A[k,i]-s)/L[i,i]
+            #if on diagonal
+            elseif k==i
+                s=0
+                #creation of element L[k,k]
+                for j=1:k-1
+                    s+=L[k,j]*L[k,j]
+                end
+                L[k,k]=sqrt(A[k,k]-s)
+            end
+        end
+    end
+    display(L)
+else:
+    println("Matrix not Symmetric")
+end
+
+function choleskyDecomp(A)
+    for j=1:d-1
+        for i=j+1:d
+            if i != j
+                nonDiagCase(A)                 #go to Matt's matrix math
+            elseif i == j
+                then
+                k = i
+                C=sqrt(A(j,j)- sum[L(i,k) * L(j,k) | k == [0:j-1]])
+                L[i,j]=C
+            end
+        end
+    end
 end
 
 #This 'open' function resides outside of the while loop to keep continuity of the variable 'fp'. If you were to call 'open' every time the while loop triggered, you would read the first matrix of the file for eternity
@@ -55,6 +98,7 @@ open("prog1b.txt","r") do fp
                 break
             end
             #Below this comment and within the while loop is where code from Maverick and Matt should go
+            choleskyDecomp(A)
     end
 end
 
