@@ -1,7 +1,7 @@
 using LinearAlgebra
 
 #create some positive definite matrix
-A=[2 1; 1 2]
+A=[1 2; 2 3]
 display(A)
 n=size(A)[1]
 #creation of L matrix 
