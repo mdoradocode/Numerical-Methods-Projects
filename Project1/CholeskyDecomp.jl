@@ -43,49 +43,36 @@ end
 function nonDiagCase(A)
 #k represents rows, i represents columns. j is our iterative variable
 #outer row loop
-if A[0,1] == [1,0]
-    L=zeros(d,d)
-    for k=1:d
-        #inner column loop
-        for i=1:d
-            #if below diag
-            if k>i
-                s=0
-                #creation of element L[k,i]
-                for j=1:i-1
-                    s+=L[i,j]*L[k,j]
+    if A[1,2] == A[2,1] && isposdef(A)
+        L=zeros(d,d)
+        for k=1:d
+            #inner column loop
+            for i=1:d
+                #if below diag
+                if k>i
+                    s=0
+                    #creation of element L[k,i]
+                    for j=1:i-1
+                        s+=L[i,j]*L[k,j]
+                    end
+                    L[k,i]=(A[k,i]-s)/L[i,i]
+                #if on diagonal
+                elseif k==i
+                    s=0
+                    #creation of element L[k,k]
+                    for j=1:k-1
+                        s+=L[k,j]*L[k,j]
+                    end
+                    L[k,k]=sqrt(A[k,k]-s)
                 end
-                L[k,i]=(A[k,i]-s)/L[i,i]
-            #if on diagonal
-            elseif k==i
-                s=0
-                #creation of element L[k,k]
-                for j=1:k-1
-                    s+=L[k,j]*L[k,j]
-                end
-                L[k,k]=sqrt(A[k,k]-s)
             end
         end
+        display(L)
+    else
+        display("Matrix not Positive Definite!")
     end
-    display(L)
-else:
-    println("Matrix not Symmetric")
 end
 
-function choleskyDecomp(A)
-    for j=1:d-1
-        for i=j+1:d
-            if i != j
-                nonDiagCase(A)                 #go to Matt's matrix math
-            elseif i == j
-                then
-                k = i
-                C=sqrt(A(j,j)- sum[L(i,k) * L(j,k) | k == [0:j-1]])
-                L[i,j]=C
-            end
-        end
-    end
-end
 
 #This 'open' function resides outside of the while loop to keep continuity of the variable 'fp'. If you were to call 'open' every time the while loop triggered, you would read the first matrix of the file for eternity
 open("prog1b.txt","r") do fp
@@ -98,9 +85,19 @@ open("prog1b.txt","r") do fp
                 break
             end
             #Below this comment and within the while loop is where code from Maverick and Matt should go
-            choleskyDecomp(A)
+            nonDiagCase(A)
     end
 end
+
+#Part C code
+A=rand(3,3)
+B=A'*A
+z=cholesky(B)
+display(z)
+fields = propertynames(z)
+display(fields)
+display(z.L*z.U-B)
+display(norm(z.L*z.U-B))
 
 #This is part of the file reading for part e of the project
 open("prog1c.txt", "r") do fp
@@ -108,6 +105,7 @@ open("prog1c.txt", "r") do fp
     while true
         #This 'A' variable is a nxn matrix read from the prog1b.dat.txt fil, moving sequentially through the file 
         A = readFileC(fp)
+        display(A)
         #This line will break out of this while loop once the end of the file is reached
         if A == 99
             break
