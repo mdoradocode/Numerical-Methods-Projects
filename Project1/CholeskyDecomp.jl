@@ -40,7 +40,7 @@ function readFileC(fp)
     return A
 end
 
-function nonDiagCase(A)
+function choleskyDecomp(A)
 #k represents rows, i represents columns. j is our iterative variable
 #outer row loop
     if A[1,2] == A[2,1] && isposdef(A)
@@ -91,7 +91,7 @@ open("prog1b.txt","r") do fp
                 break
             end
             #Below this comment and within the while loop is where code from Maverick and Matt should go
-            nonDiagCase(A)
+            choleskyDecomp(A)
     end
 end
 
