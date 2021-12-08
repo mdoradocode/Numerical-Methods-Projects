@@ -20,8 +20,9 @@ X1 = 0.5*(X0+transpose(inv(X0)))
 print("Frobenius Norm: ")
 println(norm(X0-X1)) #Want this to be 16.37054203598731
 print("\n")
-#***Problem 1b***
 
+
+#***Problem 1b***
 println("Problem 1b: ")
 #Now Make a vector v, each entry is a matrix with the (n-1)th iteration.
 #v[1] = X0 etc.
@@ -68,7 +69,7 @@ for i=1:9
 end
 #println(deltaY)
 
-display(plot(deltaX,deltaY))
+display(plot(log.(deltaX),log.(deltaY)))
 
 print("Alpha is = ")
 println(alpha)
