@@ -17,7 +17,7 @@ X0 = copy(A)
 
 X1 = 0.5*(X0+transpose(inv(X0)))
 
-print("Delta: ")
+print("Frobenius Norm: ")
 println(norm(X0-X1)) #Want this to be 16.37054203598731
 print("\n")
 #***Problem 1b***
@@ -47,6 +47,7 @@ for i=1:10
     print(", is = ")
     display(delta[i])
 end
+print("\n")
 
 #***Problem 1c***
 # need to plot (delta[i],delta[i+1]) for i=2:9 (which is k=1:8)
@@ -59,19 +60,39 @@ for i=1:9
     global deltaX, delta
     deltaX[i] = delta[i]
 end
-println(deltaX)
+#println(deltaX)
 
 for i=1:9
     global deltaY, delta
     deltaY[i] = delta[i+1]
 end
-println(deltaY)
+#println(deltaY)
 
-plot(deltaX,deltaY, label="Fuck")
+display(plot(deltaX,deltaY))
+
+print("Alpha is = ")
+println(alpha)
+print("\n")
 
 #***Problem 1d***
 
 println("Problem 1d: ")
-v[9]'*v[9]
-v[10]'*v[10]
-v[11]'*v[11]
+println("K = 8: ")
+display(v[9]'*v[9])
+println("K = 9: ")
+display(v[10]'*v[10])
+println("K = 10: ")
+display(v[11]'*v[11])
+print("\n")
+
+#***Problem 1e***
+println("Problem 1e: ")
+W = v[11]
+
+Winv  = inv(W)
+
+P = Winv * A
+println("Eigenvalues of A are: ")
+display(eigvals(A))
+println("\nEigenvalues of P are: ")
+display(eigvals(P))
