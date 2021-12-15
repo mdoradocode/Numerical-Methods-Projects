@@ -1,6 +1,6 @@
 # Math 466 Coding Project 2
 
-# Adrian Samberg
+# Adrian Samberg, Michael Dorado, Matthew Neill, Maverick Masala
 using Pkg
 using LinearAlgebra
 using Plots
